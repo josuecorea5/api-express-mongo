@@ -33,7 +33,7 @@ UserSchema.pre('findOne', function() {
 });
 
 UserSchema.methods.toJSON = function() {
-  const { isDeleted, ...data } = this.toObject();
+  const { isDeleted,password, ...data } = this.toObject();
   return data;
 };
 
