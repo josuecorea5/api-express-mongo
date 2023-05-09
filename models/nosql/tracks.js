@@ -44,6 +44,45 @@ TrackSchema.pre('findOne', function() {
   this.where({ isDeleted: false });
 });
 
+TrackSchema.statics.findAllData = function() {
+  const joinData = this.aggregate([
+    {
+      $lookup: {
+        from: 'storages',
+        localField: 'mediaId',
+        foreignField: '_id',
+        as: 'audio'
+      }
+    },
+    {
+      $unwind: '$audio'
+    }
+  ])
+  return joinData;
+}
+
+TrackSchema.statics.findOneData = function(id) {
+  const joinData = this.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(id)
+      }
+    },
+    {
+      $lookup: {
+        from: 'storages',
+        localField: 'mediaId',
+        foreignField: '_id',
+        as: 'audio'
+      }
+    },
+    {
+      $unwind: '$audio'
+    }
+  ])
+  return joinData;
+}
+
 TrackSchema.methods.toJSON = function() {
   const { isDeleted, ...data } = this.toObject();
   return data;

@@ -4,7 +4,7 @@ const { handleErrorHttp } = require('../utils/handleError');
 
 const getItems = async (req, res) => {
   try {
-    const data = await trackModel.find({});
+    const data = await trackModel.findAllData({});
     res.send({data});
   } catch (error) {
     handleErrorHttp(res, 'Error getting tracks', 404)
@@ -15,7 +15,7 @@ const getItem = async (req, res) => {
   try {
     const body = matchedData(req);
     const { id } = body;
-    const data = await trackModel.findById(id);
+    const data = await trackModel.findOneData(id);
     res.send({data});
   } catch (error) {
     handleErrorHttp(res, 'Track not found', 404)
