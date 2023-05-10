@@ -15,7 +15,7 @@ const register = async (req, res) => {
       user,
       token
     }
-    res.send({ data });
+    res.status(201).send({ data });
   } catch (error) {
     handleErrorHttp(res, 'Error creating user', 500);
   }
