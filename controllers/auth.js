@@ -24,22 +24,26 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   req = matchedData(req);
   const { email, password } = req;
-  const findUser = await userModel.findOne({ email });
-  if (!findUser) {
-    handleErrorHttp(res, 'User not found', 404);
-    return;
+  try {
+    const findUser = await userModel.findOne({ email });
+    if (!findUser) {
+      handleErrorHttp(res, 'User not found', 404);
+      return;
+    }
+    const passwordMatch = await comparePassword(password, findUser.password);
+    if (!passwordMatch) {
+      handleErrorHttp(res, 'email or password is incorrect', 400);
+      return;
+    }
+    const token = tokenSign(findUser);
+    const data = {
+      user: findUser,
+      token
+    }
+    res.send({data})
+  } catch (error) {
+    handleErrorHttp(res, 'Error login user', 500);
   }
-  const passwordMatch = await comparePassword(password, findUser.password);
-  if (!passwordMatch) {
-    handleErrorHttp(res, 'email or password is incorrect', 400);
-    return;
-  }
-  const token = tokenSign(findUser);
-  const data = {
-    user: findUser,
-    token
-  }
-  res.send({data})
 };
 
 module.exports = { register, login };
