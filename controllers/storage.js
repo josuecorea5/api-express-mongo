@@ -33,9 +33,9 @@ const createItem = async (req, res) => {
       url: `${PUBLIC_URL}/${file.filename}`
     }
     const data = await storageModel.create(fielData);
-    res.send({data})
+    res.status(201).send({data})
   } catch (error) {
-    handleErrorHttp(res, 'Error creating file', 404);
+    handleErrorHttp(res, 'Error creating file', 401);
   }
 };
 
@@ -48,7 +48,7 @@ const deleteItem = async (req, res) => {
     fs.unlinkSync(`${PATH_STORAGE}/${item.fileName}`);
     res.send(true);
   } catch (error) {
-    handleErrorHttp(res, 'Error deleting file', 404);
+    handleErrorHttp(res, 'Error deleting file', 500);
   }
 };
 
