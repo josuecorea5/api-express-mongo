@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon ./app.js",
     "start": "node ./app.js",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --silent"
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --runInBand"
   },
   "keywords": [],
   "author": "",

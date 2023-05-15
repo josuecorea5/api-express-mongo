@@ -1,21 +1,16 @@
 const requestSuperTest = require('supertest');
+const mongoose = require('mongoose');
 const app = require('../app');
 const { userModel } = require('../models')
-const authData = {
-  "email": "admin@admin.com",
-  "password": "admin2005"
-}
-
-const userRegister = {
-    "name": "Diego",
-    "age": 22,
-    "email": "admin@admin.com",
-    "password": "admin2005"
-}
+const { authData, userRegister } = require('./mocks/mocks');
 
 beforeAll(async () => {
   await userModel.deleteMany({});
 });
+
+afterAll(() => {
+  mongoose.connection.close();
+})
 
 describe('[AUTH] - Auth routes', () => {
 
