@@ -35,7 +35,7 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const {id, ...body} = matchedData(req);
-    const data = await trackModel.findByIdAndUpdate(id, body);
+    const data = await trackModel.findByIdAndUpdate(id, body,{new: true});
     res.send({data});
   } catch (error) {
     handleErrorHttp(res, 'Error updating track', 500);

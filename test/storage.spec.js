@@ -12,7 +12,7 @@ beforeAll(async () => {
   await storageModel.deleteMany({});
   const user = await userModel.create(userAdminRegister);
   JTW_TOKEN = tokenSign(user);
-})
+}, 60000);
 
 afterAll(() => {
   mongoose.connection.close();

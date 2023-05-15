@@ -6,7 +6,7 @@ const { authData, userRegister } = require('./mocks/mocks');
 
 beforeAll(async () => {
   await userModel.deleteMany({});
-});
+}, 60000);
 
 afterAll(() => {
   mongoose.connection.close();
